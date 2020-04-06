@@ -72,7 +72,6 @@ def make_norm_plan_matrix(plan_matrix, matrix_of_min_and_max_x):
         [[round((plan_matrix[i, j] - X0[j]) / interval_of_change[j], 3) for j in range(len(plan_matrix[i]))]
          for i in range(len(plan_matrix))])
     return X_norm
-
 matrix_with_min_max_x = np.array([[-5, 15], [-25, 10], [15, 45]])
 m = 6
 N = 8
@@ -83,10 +82,10 @@ plan_matrix = np.empty((8, 3))
 for i in range(len(norm_matrix)):
     for j in range(1, len(norm_matrix[i])):
         if j == 1:
-            if norm_matrix[i, j] == -1:
-                plan_matrix[i, j - 1] = -20
-            elif norm_matrix[i, j] == 1:
-                plan_matrix[i, j - 1] = 15
+            if norm_matrix[i, j] == -1:               # значення були взяті рандомно для того щоб заповнити матрицю
+                plan_matrix[i, j - 1] = -20           # планування, за допомогою якої можна визначити розмірність
+            elif norm_matrix[i, j] == 1:              # нормованої матриці, тому ця перевірка є тестовою та не впливає
+                plan_matrix[i, j - 1] = 15            # на результати лабораторної роботи
         elif j == 2:
             if norm_matrix[i, j] == -1:
                 plan_matrix[i, j - 1] = 10
@@ -109,7 +108,6 @@ for i in combination:
                             axis=1)
     plan_matr = np.append(plan_matr, np.reshape(plan_matr[:, 1] * plan_matr[:, 2] * plan_matr[:, 3], (8, 1)), axis=1)
 plan_matr = np.insert(plan_matrix, 0, 1, axis=1)
-
 print("Нормована матриця: \n", norm_matrix)
 print("Матриця відгуків: \n", Y_matrix)
 
@@ -306,8 +304,8 @@ if cont == 1:
         b_norm = np.linalg.lstsq(norm_matrix, mean_Y, rcond=None)[0]
         check1 = np.sum(b_natura * plan_matr, axis=1)
         check2 = np.sum(b_norm * norm_matrix, axis=1)
-    print("Перевірка 1: ", check1)
-    print("Перевірка 2: ", check2)
+    #print("Перевірка 1: ", check1)
+    #print("Перевірка 2: ", check2)
     M, P = 8, 8
     m = [[0 for y in range(M)] for x in range(P)]
     m[0][0] = 1
